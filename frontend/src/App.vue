@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <router-link to="/register">Register</router-link>
-    <router-link to="/login">Login</router-link>
-    <router-view></router-view>
+  <div id="app">
+    <router-view />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  // ... rest of the component code ...
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
 }
-</script>
+</style>
