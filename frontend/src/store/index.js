@@ -1,7 +1,9 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
+import { useToast } from "vue-toastification";
 
+const toast = useToast();
 const apiClient = axios.create({
   baseURL: 'http://localhost:5000', // Update with your backend API URL
   headers: {
@@ -36,16 +38,16 @@ const store = createStore({
             // Handle success, e.g., show success message or redirect
           } else {
             console.error('Invalid response data');
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           }
         })
         .catch(error => {
           if (error && error.response && error.response.data) {
             console.error(error.response.data);
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           } else {
             console.error('Invalid error response');
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           }
         });
     },
@@ -59,18 +61,25 @@ const store = createStore({
             // Handle success, e.g., store token in localStorage or redirect
           } else {
             console.error('Invalid response data');
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           }
         })
         .catch(error => {
           if (error && error.response && error.response.data) {
             console.error(error.response.data);
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           } else {
             console.error('Invalid error response');
-            // Handle error, e.g., show error message
+            toast.error('Niepoprawny login lub haslo.');
           }
         });
+    },
+    logout({ commit }) {
+      // Clear the logged-in status in the store and localStorage
+      commit('setLoggedIn', false);
+      localStorage.removeItem('loggedIn');
+      // Redirect to the login page or any other desired page
+      router.push('/login');
     }
   },
   modules: {}
