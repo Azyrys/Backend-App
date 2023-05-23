@@ -82,6 +82,7 @@ const store = createStore({
       localStorage.removeItem('loggedIn');
       // Redirect to the login page or any other desired page
       router.push('/login');
+      toast.info('Zostales wylogowany!')
     }
   },
   modules: {}
