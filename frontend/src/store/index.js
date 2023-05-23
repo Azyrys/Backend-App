@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:5000', // Update with your backend API URL
@@ -9,14 +10,29 @@ const apiClient = axios.create({
 })
 
 const store = createStore({
-  state: {},
-  mutations: {},
+  state: { loggedIn: false },
+  mutations: {
+    setLoggedIn(state, loggedIn) {
+      state.loggedIn = loggedIn;
+      // Store login status in localStorage
+      localStorage.setItem('loggedIn', loggedIn);
+    },
+    initializeStore(state) {
+      // Get login status from localStorage on store initialization
+      const loggedIn = localStorage.getItem('loggedIn');
+      if (loggedIn) {
+        state.loggedIn = JSON.parse(loggedIn);
+      }
+    }
+  },
   actions: {
-    register(context, userData) {
+    register({ commit }, userData) {
       apiClient.post('/register', userData)
         .then(response => {
           if (response && response.data) {
             console.log(response.data);
+            commit('setLoggedIn', true);
+            router.push('/');
             // Handle success, e.g., show success message or redirect
           } else {
             console.error('Invalid response data');
@@ -33,11 +49,13 @@ const store = createStore({
           }
         });
     },
-    login(context, userData) {
+    login( { commit }, userData) {
       apiClient.post('/login', userData)
         .then(response => {
           if (response && response.data) {
             console.log(response.data);
+            commit('setLoggedIn', true);
+            router.push('/');
             // Handle success, e.g., store token in localStorage or redirect
           } else {
             console.error('Invalid response data');
