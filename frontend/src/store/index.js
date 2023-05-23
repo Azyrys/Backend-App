@@ -35,7 +35,7 @@ const store = createStore({
             console.log(response.data);
             commit('setLoggedIn', true);
             router.push('/');
-            toast.success('Nowy uzytkownik dodany poprawnie.');
+            toast.success('Twoje konto zostało utworzone.');
             // Handle success, e.g., show success message or redirect
           } else {
             console.error('Invalid response data');
