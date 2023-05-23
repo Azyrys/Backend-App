@@ -98,6 +98,8 @@ input {
 
 
 <script>
+ import { useToast } from "vue-toastification";
+ const toast = useToast();
 export default {
   data() {
     return {
@@ -107,10 +109,28 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch('login', {
-        username: this.username,
-        password: this.password
-      });
+      if (!this.username || !this.password) {
+        toast.error("Wprowadź nazwę użytkownika i hasło!", {
+          position: "top-center",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
+        });
+        return;
+      }else{
+        this.$store.dispatch('login', {
+          username: this.username,
+          password: this.password
+        });
+      }
     },
     redirectToRegister() {
           this.$router.push('register');
