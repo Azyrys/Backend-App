@@ -15,10 +15,11 @@ def register():
     user_data = request.get_json()
     username = user_data.get('username')
     password = user_data.get('password')
+    role = user_data.get('role')
 
     if username and password:
         # Add user to the database
-        database.add_user(username, password)
+        database.add_user(username, password, role)
         response = jsonify({'message': 'Registration successful'})
         response.status_code = 200
     else:

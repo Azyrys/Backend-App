@@ -10,18 +10,20 @@ def create_table():
     c.execute('''CREATE TABLE IF NOT EXISTS users
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  username TEXT NOT NULL,
-                 password TEXT NOT NULL)''')
+                 password TEXT NOT NULL,
+                 role TEXT NOT NULL)
+                 ''')
 
     conn.commit()
     conn.close()
 
-def add_user(username, password):
+def add_user(username, password, role):
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()
 
     # Insert user into the users table
-    c.execute("INSERT INTO users (username, password) VALUES (?, ?)",
-              (username, password))
+    c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
+              (username, password, role))
 
     conn.commit()
     conn.close()

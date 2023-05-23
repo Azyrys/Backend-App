@@ -4,11 +4,18 @@
       <h2 class="form-title">Register</h2>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" v-model="registerData.username" />
+        <input type="text" id="username" v-model="username" />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="registerData.password" />
+        <input type="password" id="password" v-model="password" />
+      </div>
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select v-model="role" id="role" class="form-control">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
       </div>
       <button class="btn-register" @click.prevent="register">Register</button>
     </form>
@@ -68,7 +75,28 @@ input {
   border-radius: 4px;
   cursor: pointer;
 }
+.form-group {
+  margin-bottom: 1rem;
+}
 
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 .btn-register:hover {
   background-color: #45a049;
 }
