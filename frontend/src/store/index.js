@@ -35,6 +35,7 @@ const store = createStore({
             console.log(response.data);
             commit('setLoggedIn', true);
             router.push('/');
+            toast.success('Nowy uzytkownik dodany poprawnie.');
             // Handle success, e.g., show success message or redirect
           } else {
             console.error('Invalid response data');
@@ -58,6 +59,7 @@ const store = createStore({
             console.log(response.data);
             commit('setLoggedIn', true);
             router.push('/');
+            toast.success('Logowanie poprawne.');
             // Handle success, e.g., store token in localStorage or redirect
           } else {
             console.error('Invalid response data');
