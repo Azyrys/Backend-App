@@ -71,6 +71,13 @@ const store = createStore({
             // Handle error, e.g., show error message
           }
         });
+    },
+    logout({ commit }) {
+      // Clear the logged-in status in the store and localStorage
+      commit('setLoggedIn', false);
+      localStorage.removeItem('loggedIn');
+      // Redirect to the login page or any other desired page
+      router.push('/login');
     }
   },
   modules: {}

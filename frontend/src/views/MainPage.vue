@@ -12,6 +12,7 @@
     <div v-else>
         <!-- Display a message or redirect to main page -->
         <p>You are already logged in.</p>
+        <button @click="logout" class="button">Logout</button>
     </div>
       <!-- Forum topics -->
       <div class="forum-topics">
@@ -88,6 +89,11 @@
     computed: {
     loggedIn() {
       return this.$store.state.loggedIn;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
     }
   },
     data() {
