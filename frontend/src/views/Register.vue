@@ -18,6 +18,8 @@
         </select>
       </div>
       <button class="btn-register" @click.prevent="register">Register</button>
+      <br />
+      <button class="btn-login" @click.prevent="redirectToLogin">Login</button>
     </form>
   </div>
 </template>
@@ -100,7 +102,23 @@ label {
 .btn-register:hover {
   background-color: #45a049;
 }
+.btn-login {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
+.btn-login:hover {
+  background-color: #45a049;
+}
 </style>
 
 
@@ -120,6 +138,9 @@ export default {
         password: this.password,
         role: this.role
       });
+    },
+    redirectToLogin() {
+          this.$router.push('login');
     }
   }
 };

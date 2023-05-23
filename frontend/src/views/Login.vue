@@ -11,6 +11,7 @@
         <input type="password" id="password" v-model="password" />
       </div>
       <button class="btn-login" @click.prevent="login">Login</button>
+      <button class="btn-register" @click="redirectToRegister">Register</button>
     </form>
   </div>
 </template>
@@ -73,6 +74,26 @@ input {
   background-color: #45a049;
 }
 
+.btn-register {
+      display: block;
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: auto; 
+    }
+
+.btn-register:hover {
+  background-color: #45a049;
+}
+
 </style>
 
 
@@ -90,6 +111,9 @@ export default {
         username: this.username,
         password: this.password
       });
+    },
+    redirectToRegister() {
+          this.$router.push('register');
     }
   }
 };
