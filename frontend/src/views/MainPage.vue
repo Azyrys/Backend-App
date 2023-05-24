@@ -1,40 +1,18 @@
 <template>
-    <div class="main-page">
-      <h1>Welcome to the Forum</h1>
-  
-      <!-- Register and Login buttons -->
-      <div v-if="!loggedIn" class="login-page">
-      <div class="buttons">
-        <router-link to="/register" class="button">Register</router-link>
-        <router-link to="/login" class="button">Login</router-link>
-      </div>
-    </div>
-    <div v-else>
-        <!-- Display a message or redirect to main page -->
-        <p>You are already logged in.</p>
-        <button @click="logout" class="button">Logout</button>
-    </div>
-      <!-- Forum topics -->
-      <div class="forum-topics">
-        <h2>Topics</h2>
+  <div>
+    <h2>Topics</h2>
+    <ul>
+      <li v-for="topic in topics" :key="topic.id">
+        <h3>{{ topic[1]}}</h3>
         <ul>
-          <li v-for="topic in topics" :key="topic.id">
-            <router-link :to="'/topic/' + topic.id">{{ topic.title }}</router-link>
+          <li v-for="post in topic.posts" :key="post.id">
+            {{ post.content }}
           </li>
         </ul>
-      </div>
-      
-      <!-- Recent posts -->
-      <div class="recent-posts">
-        <h2>Recent Posts</h2>
-        <ul>
-          <li v-for="post in recentPosts" :key="post.id">
-            <router-link :to="'/post/' + post.id">{{ post.title }}</router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </template>
+      </li>
+    </ul>
+  </div>
+</template>
   <style scoped>
   .main-page {
     max-width: 800px;
@@ -77,6 +55,13 @@
   }
   </style>
   <script>
+  import axios from 'axios';
+  const apiClient = axios.create({
+  baseURL: 'http://localhost:5000', // Update with your backend API URL
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
   export default {
     created() {
     // Check if the user is already logged in
@@ -91,9 +76,22 @@
       return this.$store.state.loggedIn;
     }
   },
+  mounted() {
+    this.fetchTopics();
+  },
   methods: {
     logout() {
       this.$store.dispatch('logout');
+    },
+    fetchTopics() {
+      apiClient.get('/topics')
+        .then(response => {
+          this.topics = response.data;
+          console.log(this.topics)
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   },
     data() {
@@ -109,7 +107,8 @@
           { id: 3, title: 'Post 3' }
         ]
       };
-    }
+    },
+    
   };
   </script>
   
