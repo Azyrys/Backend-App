@@ -1,6 +1,6 @@
 import sqlite3
 
-DATABASE = 'users.db'  # SQLite database file path
+DATABASE = 'database.db'  # SQLite database file path
 
 def create_table():
     conn = sqlite3.connect(DATABASE)
@@ -13,7 +13,7 @@ def create_table():
                  password TEXT NOT NULL,
                  role TEXT NOT NULL)
                  ''')
-    
+
     # Create topics table if it doesn't exist
     c.execute('''CREATE TABLE IF NOT EXISTS topics
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,7 +104,7 @@ def get_all_posts():
     c = conn.cursor()
 
     # Retrieve all posts with their associated topics from the posts and topics tables
-    c.execute("SELECT p.*, t.name FROM posts p JOIN topics t ON p.topic_id = t.id")
+    c.execute("SELECT DISTINCT p.*, t.name FROM posts p JOIN topics t ON p.topic_id = t.id")
     posts = c.fetchall()
 
     conn.close()
@@ -116,7 +116,7 @@ def get_topic_id(topic):
     c = conn.cursor()
 
     # Retrieve topic ID by topic name from the topics table
-    c.execute("SELECT id FROM topics WHERE topic=?", (topic,))
+    c.execute("SELECT id FROM topics WHERE name=?", (topic,))
     topic_id = c.fetchone()
 
     conn.close()
