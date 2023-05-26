@@ -28,7 +28,7 @@
         </li>
       </ul>
     </div>
-    <div v-if="!loggedIn" class="login-page">
+    <div v-if="loggedIn" class="login-page">
       <div class="buttons">
         <router-link to="/add-topic" class="button">Add Topic</router-link>
         <router-link to="/add-post" class="button">Add Post</router-link>

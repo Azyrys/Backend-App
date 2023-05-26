@@ -20,7 +20,7 @@
       <button class="btn-register" @click.prevent="register">Register</button>
       <br />
       <button class="btn-login" @click.prevent="redirectToLogin">Login</button>
-      <button class="btn-login" @click.prevent="redirectToMainPage">MainPage</button>
+      <button class="btn-register" @click.prevent="redirectToMainPage">Main Page</button>
     </form>
   </div>
 </template>
@@ -66,18 +66,20 @@ input {
 }
 
 .btn-register {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background-color: #4caf50;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+      display: block;
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: auto;
+    }
 .form-group {
   margin-bottom: 1rem;
 }

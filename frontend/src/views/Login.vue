@@ -12,7 +12,7 @@
       </div>
       <button class="btn-login" @click.prevent="login">Login</button>
       <button class="btn-register" @click="redirectToRegister">Register</button>
-      <button class="btn-register" @click="redirectToMainPage">Register</button>
+      <button class="btn-register" @click="redirectToMainPage">Main Page</button>
     </form>
   </div>
 </template>
