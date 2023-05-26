@@ -21,7 +21,7 @@
         <li v-for="topic in topics" :key="topic.id">
           <h3 class="topic-title">Topic Name: {{ topic.title }}</h3>
           <h5>Posts:</h5>
-          <ul v-if="topic.posts.length == 1 && topic.posts[0].id !== null">
+          <ul v-if="topic.posts[0].id !== null">
             <li v-for="post in topic.posts" :key="post.id" class="post-content">{{ post.content }}</li>
           </ul>
           <div v-else>No posts for this topic</div>
