@@ -17,12 +17,14 @@
       </div>
       <button type="submit" class="submit-button">Submit</button>
     </form>
+    <button class="btn-register" @click="redirectToMainPage">Main Page</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import { useToast } from "vue-toastification";
+ const toast = useToast();
 const apiClient = axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
@@ -60,18 +62,27 @@ export default {
         topic: this.selectedTopic,
         content: this.content
       };
-
+      if(localStorage.getItem('loggedIn')){
       apiClient
         .post('/add-post', postData)
         .then(response => {
           console.log(response.data);
           // Handle success, e.g., show a success message or redirect
           this.$router.push('/');
+          toast.success("Post dodany")
         })
         .catch(error => {
           console.error(error);
           // Handle error, e.g., show an error message
+          
         });
+    
+    }else{
+      toast.error("Musisz byc zalogowany")
+    }
+  },
+  redirectToMainPage() {
+          this.$router.push('/');
     }
   }
 };
@@ -86,7 +97,25 @@ export default {
   border-radius: 5px;
   background-color: #f5f5f5;
 }
+.btn-register {
+      display: block;
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: auto;
+    }
 
+.btn-register:hover {
+  background-color: #45a049;
+}
 .new-post-form h2 {
   margin-bottom: 20px;
   font-size: 24px;
