@@ -1,58 +1,143 @@
 <template>
-    <div>
-      <h2>Add New Post</h2>
-      <form @submit.prevent="addNewPost">
-        <div>
-          <label for="topic">Topic:</label>
-          <input type="text" id="topic" v-model="topic" required>
-        </div>
-        <div>
-          <label for="content">Content:</label>
-          <textarea id="content" v-model="content" required></textarea>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  const apiClient = axios.create({
-  baseURL: 'http://localhost:5000', // Update with your backend API URL
+  <div>
+    <h2>Add New Post</h2>
+    <form @submit.prevent="addNewPost" class="new-post-form">
+      <div>
+        <label for="topic">Topic:</label>
+        <select id="topic" v-model="selectedTopic" required>
+          <option value="">Select a topic</option>
+          <option v-for="topic in topics" :key="topic[0]" :value="topic[1]">
+            {{ topic[1] }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label for="content">Content:</label>
+        <textarea id="content" v-model="content" required></textarea>
+      </div>
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json'
   }
-})
-  export default {
-    data() {
-      return {
-        topic: '',
-        content: ''
-      };
+});
+
+export default {
+  data() {
+    return {
+      selectedTopic: '',
+      content: '',
+      topics: []
+    };
+  },
+
+  mounted() {
+    this.fetchTopics();
+  },
+
+  methods: {
+    fetchTopics() {
+      apiClient
+        .get('/topics')
+        .then(response => {
+          this.topics = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
-    
-    methods: {
-      addNewPost() {
-        const postData = {
-          topic: this.topic,
-          content: this.content
-        };
-  
-        apiClient.post('/add-post', postData)
-          .then(response => {
-            console.log(response.data);
-            // Handle success, e.g., show a success message or redirect
-          })
-          .catch(error => {
-            console.error(error);
-            // Handle error, e.g., show an error message
-          });
-      }
+
+    addNewPost() {
+      const postData = {
+        topic: this.selectedTopic,
+        content: this.content
+      };
+
+      apiClient
+        .post('/add-post', postData)
+        .then(response => {
+          console.log(response.data);
+          // Handle success, e.g., show a success message or redirect
+          this.$router.push('/');
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error, e.g., show an error message
+        });
     }
-  };
-  </script>
-  
-  <style scoped>
-  /* Your component-specific styles */
-  </style>
-  
+  }
+};
+</script>
+
+<style scoped>
+.new-post-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+.new-post-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.new-post-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.new-post-form select,
+.new-post-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.new-post-form textarea {
+  height: 150px; /* Adjust the height as needed */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-right: 10px; /* Add margin to the right side */
+  font-size: 16px;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+.new-post-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.new-post-form button:hover {
+  background-color: #0056b3;
+}
+
+</style>

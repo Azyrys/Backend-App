@@ -70,11 +70,22 @@ def add_topic(name):
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()
 
+    # Check if the topic already exists in the database
+    c.execute("SELECT name FROM topics WHERE name=?", (name,))
+    existing_topic = c.fetchone()
+
+    if existing_topic:
+        # Topic already exists, do not add it again
+        conn.close()
+        return False
+
     # Insert topic into the topics table
     c.execute("INSERT INTO topics (name) VALUES (?)", (name,))
-
     conn.commit()
     conn.close()
+
+    return True
+
 
 def add_post(content, topic_id):
     conn = sqlite3.connect(DATABASE)
@@ -104,12 +115,13 @@ def get_all_posts():
     c = conn.cursor()
 
     # Retrieve all posts with their associated topics from the posts and topics tables
-    c.execute("SELECT DISTINCT p.*, t.name FROM posts p JOIN topics t ON p.topic_id = t.id")
+    c.execute("SELECT DISTINCT p.*, t.name FROM topics t LEFT JOIN posts p ON t.id = p.topic_id")
     posts = c.fetchall()
 
     conn.close()
 
     return posts
+
 
 def get_topic_id(topic):
     conn = sqlite3.connect(DATABASE)

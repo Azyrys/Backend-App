@@ -27,13 +27,11 @@ def register():
         response = jsonify({'message': 'Registration failed'})
         response.status_code = 400
 
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8080')  # Replace with your frontend URL
-    response.headers.add('Access-Control-Allow-Methods', 'POST')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     return response
 
 # Example route for retrieving all users
 @app.route('/users', methods=['GET'])
+@cross_origin(origin='http://localhost:8080', methods=['POST'], headers=['Content-Type'])
 def get_users():
     users = database.get_all_users()
 
@@ -41,9 +39,7 @@ def get_users():
     user_list = [{'id': user[0], 'username': user[1], 'password': user[2]} for user in users]
 
     response = jsonify(user_list)
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8080')  # Replace with your frontend URL
-    response.headers.add('Access-Control-Allow-Methods', 'GET')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+
     return response
 
 
@@ -110,8 +106,10 @@ def add_new_topic():
         response = jsonify({'message': 'Content is required.'}), 400
         return response
 
-    database.add_topic(content)
-    response = jsonify({'message': 'Topic added successfully.'}), 201
+    if database.add_topic(content):
+        response = jsonify({'message': 'Topic added successfully.'}), 201
+    else:
+        response = jsonify({'message': 'Topic with that name already exists.'}), 208
     return response
 
 if __name__ == '__main__':
