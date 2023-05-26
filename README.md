@@ -20,10 +20,12 @@ npm run serve
 
 ### To run backend tests
 ```
-python -m unittest .\backend\unit_tests\tests.py
+cd .\backend\
+python -m unittest tests_app.py
 ```
 
 ### To run frontend tests
 ```
-npx jest .\unit_tests\"TestName".spec.js
+cd .\frontend
+npx jest
 ```
