@@ -20,6 +20,7 @@
       <button class="btn-register" @click.prevent="register">Register</button>
       <br />
       <button class="btn-login" @click.prevent="redirectToLogin">Login</button>
+      <button class="btn-login" @click.prevent="redirectToMainPage">MainPage</button>
     </form>
   </div>
 </template>
@@ -161,6 +162,9 @@ export default {
     },
     redirectToLogin() {
           this.$router.push('login');
+    },
+    redirectToMainPage() {
+          this.$router.push('/');
     }
   }
 };

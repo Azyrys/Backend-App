@@ -28,9 +28,11 @@
         </li>
       </ul>
     </div>
-    <div class="buttons">
-      <router-link to="/add-topic" class="button">Add Topic</router-link>
-      <router-link to="/add-post" class="button">Add Post</router-link>
+    <div v-if="!loggedIn" class="login-page">
+      <div class="buttons">
+        <router-link to="/add-topic" class="button">Add Topic</router-link>
+        <router-link to="/add-post" class="button">Add Post</router-link>
+      </div>
     </div>
   </div>
 </template>

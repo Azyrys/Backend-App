@@ -12,6 +12,7 @@
       </div>
       <button class="btn-login" @click.prevent="login">Login</button>
       <button class="btn-register" @click="redirectToRegister">Register</button>
+      <button class="btn-register" @click="redirectToMainPage">Register</button>
     </form>
   </div>
 </template>
@@ -87,7 +88,7 @@ input {
       border-radius: 4px;
       cursor: pointer;
       margin-top: 10px;
-      margin-left: auto; 
+      margin-left: auto;
     }
 
 .btn-register:hover {
@@ -134,6 +135,9 @@ export default {
     },
     redirectToRegister() {
           this.$router.push('register');
+    },
+    redirectToMainPage() {
+          this.$router.push('/');
     }
   }
 };
