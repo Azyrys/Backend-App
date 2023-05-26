@@ -11,6 +11,7 @@
     "@vue/test-utils": "^2.4.0-alpha.1",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "uuid": "^9.0.0",
     "vue": "^3.2.13",
     "vue-jest": "^5.0.0-alpha.10",
     "vue-loader": "^17.0.1",

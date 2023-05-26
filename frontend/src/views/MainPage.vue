@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:5000',
@@ -78,8 +79,9 @@ export default {
         const response = await apiClient.get('/posts');
         console.log(response.data);
         const mergedMap = new Map();
-
         response.data.forEach(topic => {
+          if (topic[2] === null)
+            topic[2] = uuidv4()
           const id = topic[2];
           const title = topic[3];
           const postId = topic[0];
